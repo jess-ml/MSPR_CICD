@@ -7,7 +7,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - run: |
-          jar cvf jessica.war *
+          jar cvf boris.war *
     - name: copy file via ssh password
       uses: appleboy/scp-action@master
       with:
@@ -15,7 +15,7 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.MY_PASSWORD }}
         port: ${{ secrets.PORT }}
-        source: "jessica.war"
+        source: "boris.war"
         target: "/opt/tomcat/webapps"
 
   deploy:
@@ -45,7 +45,7 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: |
           ipfs_key=$(cat ipfs_key.txt | awk '{print $2}')
-          curl -X POST -H "Content-Type: application/json" -d "{\"content\": \" Le workfl-owo IPFS est terminé. Clé IPFS : $ipfs_key\"}" $DISCORD_WEBHOOK
+          curl -X POST -H "Content-Type: application/json" -d "{\"content\": \"Le workfl-owo IPFS est terminé. Clé IPFS : $ipfs_key\"}" $DISCORD_WEBHOOK
   setup_and_backup:
     name: Setup SSH and Backup Database
     runs-on: ubuntu-latest
@@ -64,9 +64,7 @@ jobs:
       
       - name: Create SSH Tunnel
         run: |
-          echo "Port: ${{ secrets.PORT }}"
-          echo "DNS: ${{ secrets.DNS }}"
-          ssh -i ~/.ssh/id_rsa -L 3307:127.0.0.1:3306 ${{ secrets.PORT }} admin@${{ secrets.DNS }} -N &
+          ssh -i ~/.ssh/id_rsa -L 3307:127.0.0.1:3306 admin@${{ secrets.DNS }} -N &
           SSH_TUNNEL_PID=$!
           sleep 10
           if ps -p $SSH_TUNNEL_PID > /dev/null; then
