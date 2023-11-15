@@ -54,7 +54,7 @@ jobs:
       - uses: actions/checkout@v2
       
       
-      - name: Setup SSH Keys
+      - name: Setup SSH 22
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.CLE }}" > ~/.ssh/id_rsa
