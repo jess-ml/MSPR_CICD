@@ -25,7 +25,7 @@ jobs:
           SSH_TUNNEL_PID=$!
           sleep 10
           if ps -p $SSH_TUNNEL_PID > /dev/null; then
-            echo "SSH tunnel established, PID: $SSH_TUNNEL_PID"
+            echo "SSH tunnel established, PID: $22"
           else
             echo "SSH tunnel failed"
             exit 1    
