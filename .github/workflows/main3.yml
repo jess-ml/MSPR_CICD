@@ -54,7 +54,7 @@ jobs:
       - uses: actions/checkout@v2
       
       
-      - name: Setup SSH 22
+      - name: Setup SSH Keys
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.CLE }}" > ~/.ssh/id_rsa
@@ -64,7 +64,7 @@ jobs:
       
       - name: Create SSH Tunnel
         run: |
-          ssh -i ~/.ssh/id_rsa -L 3307:127.0.0.1:3306 admin@${{ secrets.DNS }} -N &
+          ssh -i ~/.ssh/id_rsa -L 3307:127.0.0.1:3306 admin@${{ secrets.PORT }} -N &
           SSH_TUNNEL_PID=$!
           sleep 10
           if ps -p $SSH_TUNNEL_PID > /dev/null; then
