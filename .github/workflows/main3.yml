@@ -64,7 +64,9 @@ jobs:
       
       - name: Create SSH Tunnel
         run: |
-          ssh -i ~/.ssh/id_rsa -L 3307:127.0.0.1:3306 admin@${{ secrets.PORT }} -N &
+          echo "Port: ${{ secrets.PORT }}"
+          echo "DNS: ${{ secrets.DNS }}"
+          ssh -i ~/.ssh/id_rsa -L 3307:127.0.0.1:3306 ${{ secrets.PORT }} admin@${{ secrets.DNS }} -N &
           SSH_TUNNEL_PID=$!
           sleep 10
           if ps -p $SSH_TUNNEL_PID > /dev/null; then
